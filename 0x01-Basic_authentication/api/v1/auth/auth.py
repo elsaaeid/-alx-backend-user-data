@@ -34,7 +34,7 @@ class Auth:
 
     def authorization_header(self, request=None) -> Optional[str]:
         """
-        Returns None or str accrding to request
+        Returns None or str according to request
         """
         if not request:
             return None
