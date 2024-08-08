@@ -16,7 +16,10 @@ if auth:
     if auth == 'basic_auth':
         from api.v1.auth.basic_auth import BasicAuth
         auth = BasicAuth()
-    elif auth != 'basic_auth':
+    elif auth == 'session_auth':
+        from api.v1.auth.session_auth import SessionAuth
+        auth = SessionAuth()
+    else:
         from api.v1.auth.auth import Auth
         auth = Auth()
 
@@ -51,13 +54,15 @@ def auth_filter():
     authentication purposes
     """
     exclude_list = ['/api/v1/status/', '/api/v1/unauthorized/',
-                    '/api/v1/forbidden/']
+                    '/api/v1/forbidden/', '/api/v1/auth_session/login/']
+    request.current_user = auth.current_user(request)
     if auth is None:
         pass
     elif not auth.require_auth(request.path, exclude_list):
         pass
     else:
-        if auth.authorization_header(request) is None:
+        if auth.authorization_header(request) is None\
+                and auth.session_cookie(request) is None:
             abort(401)
         if auth.current_user(request) is None:
             abort(403)
