@@ -61,25 +61,16 @@ def auth_filter():
     """
     exclude_list = ['/api/v1/status/', '/api/v1/unauthorized/',
                     '/api/v1/forbidden/', '/api/v1/auth_session/login/']
-    user = auth.current_user(request)
-    # Assign the result of auth.current_user(request) to request.current_user
-    request.current_user = user
+    request.current_user = auth.current_user(request)
     if auth is None:
         pass
-    # if request.path is not part of the list above, do nothing
-    # You must use the method require_auth from the auth instance
     elif not auth.require_auth(request.path, exclude_list):
         pass
     else:
-        # If auth.authorization_header(request) and auth.session_cookie(request)
-        # return None, raise the error, 401 - you must use abort
-        auth_header = auth.authorization_header(request)
-        session_cookie = auth.session_cookie(request)
-        if auth_header is None and session_cookie is None:
+        if auth.authorization_header(request) is None\
+                and auth.session_cookie(request) is None:
             abort(401)
-        # If auth.current_user(request) returns None, raise the error 403 - you
-        # must use abort
-        if user is None:
+        if auth.current_user(request) is None:
             abort(403)
 
 
