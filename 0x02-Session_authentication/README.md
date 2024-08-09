@@ -54,7 +54,7 @@
 
 <ul>
   <li>
-    GET /api/v1/status: returns the status of the API
+    <code>GET /api/v1/status</code>: returns the status of the API
   </li>
   <li>
     GET /api/v1/stats: returns some stats of the API
