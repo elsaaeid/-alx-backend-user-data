@@ -12,7 +12,7 @@
 
 <ul>
   <li>
-    base.py: base of all models of the API - handle serialization to file
+    <code>base.py</code>: base of all models of the API - handle serialization to file
   </li>
   <li>
     <code>user.py</code>: user model
