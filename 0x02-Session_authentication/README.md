@@ -8,7 +8,7 @@
   Files
 </h2>
 
-<h3>models/</h3>
+<h3><code>models/</code></h3>
 
 <ul>
   <li>
