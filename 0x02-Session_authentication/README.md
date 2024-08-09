@@ -1,7 +1,7 @@
 # 0x02-Session_authentication
 
 <p>
-  Simple HTTP API for playing with User model.
+  Simple HTTP API for playing with <code>User</code> model.
 </p>
 
 <h2>
@@ -69,10 +69,10 @@
     <code>DELETE /api/v1/users/:id</code>: deletes an user based on the ID
   </li>
     <li>
-    <code>POST /api/v1/users</code>: creates a new user (JSON parameters: email, password, last_name (optional) and first_name (optional))
+    <code>POST /api/v1/users</code>: creates a new user (JSON parameters: <code>email</code>, <code>password</code>, <code>last_name</code> (optional) and first_name (optional))
   </li>
     <li>
-    <code>PUT /api/v1/users/:id</code>: updates an user based on the ID (JSON parameters: last_name and first_name)
+    <code>PUT /api/v1/users/:id</code>: updates an user based on the ID (JSON parameters: <code>last_name</code> and<code>first_name</code>)
   </li>
     <li>
     <code>GET /users/me</code>: retrieves the authenticated User object
