@@ -59,31 +59,28 @@ def auth_filter():
     Filtering each request for
     authentication purposes
     """
-    # If auth is None, do nothing
-    if auth is None:
-        return
-    # Create list of excluded paths
-    exclude_list = ['/api/v1/status/',
-                      '/api/v1/unauthorized/',
-                      '/api/v1/forbidden/',
-                      '/api/v1/auth_session/login/']
-    # if request.path is not part of the list above, do nothing
-    # You must use the method require_auth from the auth instance
-    if not auth.require_auth(request.path, exclude_list):
-        return
-    # If auth.authorization_header(request) and auth.session_cookie(request)
-    # return None, raise the error, 401 - you must use abort
-    auth_header = auth.authorization_header(request)
-    session_cookie = auth.session_cookie(request)
-    if auth_header is None and session_cookie is None:
-        abort(401)
-    # If auth.current_user(request) returns None, raise the error 403 - you
-    # must use abort
+    exclude_list = ['/api/v1/status/', '/api/v1/unauthorized/',
+                    '/api/v1/forbidden/', '/api/v1/auth_session/login/']
     user = auth.current_user(request)
-    if user is None:
-        abort(403)
     # Assign the result of auth.current_user(request) to request.current_user
     request.current_user = user
+    if auth is None:
+        pass
+    # if request.path is not part of the list above, do nothing
+    # You must use the method require_auth from the auth instance
+    elif not auth.require_auth(request.path, exclude_list):
+        pass
+    else:
+        # If auth.authorization_header(request) and auth.session_cookie(request)
+        # return None, raise the error, 401 - you must use abort
+        auth_header = auth.authorization_header(request)
+        session_cookie = auth.session_cookie(request)
+        if auth_header is None and session_cookie is None:
+            abort(401)
+        # If auth.current_user(request) returns None, raise the error 403 - you
+        # must use abort
+        if user is None:
+            abort(403)
 
 
 if __name__ == "__main__":
