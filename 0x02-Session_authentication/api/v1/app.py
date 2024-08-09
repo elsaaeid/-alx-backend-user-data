@@ -62,6 +62,8 @@ def auth_filter():
     exclude_list = ['/api/v1/status/', '/api/v1/unauthorized/',
                     '/api/v1/forbidden/', '/api/v1/auth_session/login/']
     request.current_user = auth.current_user(request)
+    auth_header = auth.authorization_header(request)
+    session_cookie = auth.session_cookie(request)
     if auth is None:
         pass
     elif not auth.require_auth(request.path, exclude_list):
@@ -69,8 +71,6 @@ def auth_filter():
     else:
         # If auth.authorization_header(request) and auth.session_cookie(request)
         # return None, raise the error, 401 - you must use abort
-        auth_header = auth.authorization_header(request)
-        session_cookie = auth.session_cookie(request)
         if auth_header is None and session_cookie is None:
             abort(401)
         # If auth.current_user(request) returns None, raise the error 403
